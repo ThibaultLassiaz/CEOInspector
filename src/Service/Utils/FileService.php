@@ -3,6 +3,7 @@
 namespace App\Service\Utils;
 
 use Doctrine\ORM\EntityManagerInterface;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 final class FileService
@@ -32,6 +33,9 @@ final class FileService
         file_put_contents($filePath, $fileContent);
     }
 
+    /**
+     * @throws Exception
+     */
     public function createCsv(string $filePath, string $csvPath)
     {
         $spreadsheet = IOFactory::load($filePath);

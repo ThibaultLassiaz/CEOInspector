@@ -43,7 +43,7 @@ final class GouvCompanyService
     public function findCompanyLeaders(mixed $data, string $name, string $postalCode): string
     {
         $stringLeader = '';
-        $dirigeants = [];
+        $leaders = [];
 
         if ([] !== $data['results']) {
             $company = $data['results'][0];
@@ -57,19 +57,19 @@ final class GouvCompanyService
                     return 'Pas de dirigeants';
                 }
 
-                foreach ($company['dirigeants'] as $dirigeant) {
-                    if (isset($dirigeant['nom'])) {
-                        if (str_contains($dirigeant['prenoms'], ' ')) {
-                            $dirigeant['prenoms'] = strtok($dirigeant['prenoms'], ' ');
+                foreach ($company['dirigeants'] as $leader) {
+                    if (isset($leader['nom'])) {
+                        if (str_contains($leader['prenoms'], ' ')) {
+                            $leader['prenoms'] = strtok($leader['prenoms'], ' ');
                         }
-                        if (null == $dirigeant['qualite']) {
-                            $dirigeant['qualite'] = 'Gérant';
+                        if (null == $leader['qualite']) {
+                            $leader['qualite'] = 'Gérant';
                         }
-                        $dirigeants[$dirigeant['qualite']] = $dirigeant['nom'].' '.$dirigeant['prenoms'];
+                        $leaders[$leader['qualite']] = $leader['nom'].' '.$leader['prenoms'];
                     }
                 }
 
-                foreach ($dirigeants as $qualite => $name) {
+                foreach ($leaders as $qualite => $name) {
                     $stringLeader = $stringLeader.$qualite.' : '.$name.' | ';
                 }
                 $stringLeader = substr($stringLeader, 0, -2);
