@@ -15,6 +15,10 @@ final class FileService
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param string $filePath
+     * @return array<int, mixed>
+     */
     public function openCsvFile(string $filePath): array
     {
         $content = array_map('str_getcsv', file($filePath));
@@ -36,7 +40,7 @@ final class FileService
     /**
      * @throws Exception
      */
-    public function createCsv(string $filePath, string $csvPath)
+    public function createCsv(string $filePath, string $csvPath): void
     {
         $spreadsheet = IOFactory::load($filePath);
         $worksheet = $spreadsheet->getSheet(0);

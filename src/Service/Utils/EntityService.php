@@ -15,6 +15,11 @@ final class EntityService
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param array<int, mixed> $line
+     * @param File $file
+     * @return int
+     */
     public function createCompany(array $line, File $file): int
     {
         $company = new Company();

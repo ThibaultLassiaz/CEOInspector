@@ -27,6 +27,9 @@ class File
     private string $path;
 
     #[ORM\OneToMany(mappedBy: 'file', targetEntity: Company::class)]
+    /**
+     * @var Collection<int, Company> $companies
+     */
     private Collection $companies;
 
     public function getId(): int

@@ -46,7 +46,7 @@ class CompanyRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function countTreatedAndNonTreatedByFileId(File $file): array
+    public function countTreatedAndNonTreatedByFileId(File $file): int
     {
         $qb = $this->createQueryBuilder('c');
         $qb->select('count(c) as total, SUM(CASE WHEN c.treated = true THEN 1 ELSE 0 END) as treated, SUM(CASE WHEN c.treated = false THEN 1 ELSE 0 END) as non_treated')

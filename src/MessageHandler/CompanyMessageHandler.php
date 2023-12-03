@@ -6,11 +6,13 @@ use App\Message\CompanyMessage;
 use App\Repository\CompanyRepository;
 use App\Service\Api\GouvCompanyService;
 use App\Service\Utils\EntityService;
+use Exception;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[AsMessageHandler]
 class CompanyMessageHandler
@@ -33,7 +35,7 @@ class CompanyMessageHandler
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws \Exception
+     * @throws Exception|TransportExceptionInterface
      */
     public function __invoke(CompanyMessage $message): void
     {

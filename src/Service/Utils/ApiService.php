@@ -33,6 +33,7 @@ final class ApiService
     /**
      * @throws NonUniqueResultException
      * @throws NoResultException
+     * @return array<mixed, mixed>
      */
     public function findFiles(): array
     {
@@ -50,7 +51,7 @@ final class ApiService
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function countTreated(File $file): array
+    public function countTreated(File $file): int
     {
         return $this->companyRepository->countTreatedAndNonTreatedByFileId($file);
     }
@@ -60,6 +61,10 @@ final class ApiService
         return $this->fileRepository->findOneBy(['file_id' => $fileId]);
     }
 
+    /**
+     * @param string $filePath
+     * @return array<string, mixed>
+     */
     public function findByFilePath(string $filePath): array
     {
         $file = $this->findFileByPath($filePath);
