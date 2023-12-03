@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Company Scrapper</title>
+</head>
+<body>
+
+<div class="center">
+    <h1>Company Scrapper</h1>
+    <div class="center-bis">
+        {{ form_start(form, {'attr': {'class': 'custom-file'}}) }}
+        {{ form_widget(form.file, {'attr': {'class': 'custom-file-input'}}) }}
+        <button type="submit" class="btn btn-primary btn-submit">Upload</button>
+        {{ form_end(form) }}
+    </div>
+
+    <h1>Fichiers déjà créés</h1>
+    <div class="center-bis">
+        <table>
+            <thead>
+            <tr>
+                <th>Numéro du fichier</th>
+                <th>Nom du fichier</th>
+                <th>Nombre de lignes</th>
+                <th>Lignes traitées</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for file in files %}
+                <tr>
+                    <td>{{ file.file.fileId }}</td>
+                    <td>{{ file.file.name }}</td>
+                    <td>{{ file.file.lineNumber }}</td>
+                    <td class="treatment-status">{{ file.count.treated }} / {{ file.count.total }}</td>
+                    <td>
+                        <button class="check-button" data-file-path={{ file.file.fileId }}><i class="fa fa-refresh"></i>Check</button>
+                    </td>
+                    <td>
+                        <button class="download-button" data-file-path={{ file.file.path }}><i class="fa fa-download"></i>Télécharger</button>
+                    </td>
+                    <td>
+                        <button class="delete-button" data-file-path={{ file.file.path }}><i class="fa fa-trash"></i>Supprimer</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
+</body>
+</html>

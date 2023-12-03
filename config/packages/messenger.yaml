@@ -1,0 +1,28 @@
+framework:
+    messenger:
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            company:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    use_notify: true
+                    check_delayed_interval: 60000
+                retry_strategy:
+                    max_retries: 3
+                    multiplier: 2
+            file:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN_2)%'
+                options:
+                    use_notify: true
+                    check_delayed_interval: 60000
+                retry_strategy:
+                    max_retries: 3
+                    multiplier: 2
+
+        routing:
+            App\Message\CompanyMessage: company
+            App\Message\FileMessage: file
+
+
+            # Route your messages to the transports
+            # 'App\Message\YourMessage': async
