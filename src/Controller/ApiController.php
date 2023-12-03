@@ -48,9 +48,7 @@ final class ApiController extends AbstractController
 
         $projectDir = $this->getParameter('kernel.project_dir');
 
-//        $output = fopen($projectDir . "\public" . $filePath . '.csv', 'w');
-        // PROD
-         $output = fopen($projectDir . "/public" . $filePath . '.csv', 'w');
+         $output = fopen($projectDir . DIRECTORY_SEPARATOR ."public" . $filePath . '.csv', 'w');
 
         fwrite($output, "Entreprise,Dirigeants");
         fwrite ($output, PHP_EOL);
@@ -82,9 +80,6 @@ final class ApiController extends AbstractController
         $projectDir = $this->getParameter('kernel.project_dir');
         $filePath = $request->request->get('filePath');
 
-//        $filePathInProject = $projectDir . "\public" . $filePath;
-
-        // PROD
         $filePathInProject = $projectDir . DIRECTORY_SEPARATOR . "public" . $filePath;
 
         $this->apiService->deleteFileByPath($filePath);
