@@ -7,7 +7,6 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 final class FileService
 {
-
     protected EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)

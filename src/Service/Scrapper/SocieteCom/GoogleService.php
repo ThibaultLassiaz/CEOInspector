@@ -12,7 +12,6 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 final class GoogleService
 {
-
     public function __construct()
     {
     }
@@ -29,16 +28,16 @@ final class GoogleService
         $content = $this->generateRequest($url);
         $possibleUrl = $this->findCompanyFromRequest($content);
 
-        if ($possibleUrl == "Not found") {
+        if ('Not found' == $possibleUrl) {
             return [$possibleUrl];
         }
-        $possibleUrl = "https://" . $possibleUrl;
+        $possibleUrl = 'https://'.$possibleUrl;
 
         $content = $this->generateRequest($possibleUrl);
 
         $companyStatus = $this->getCompanyStatus($content);
 
-        if ($companyStatus == Status::INACTIVE) {
+        if (Status::INACTIVE == $companyStatus) {
             return ['Inactive'];
         }
 
@@ -49,12 +48,12 @@ final class GoogleService
     {
         $companyNameForUrl = $company->getName();
 
-        $companyNameForUrl = str_replace(" ", "+", $companyNameForUrl);
-        $companyNameForUrl = str_replace("&", "%26", $companyNameForUrl);
-        $companyNameForUrl = str_replace("'", "%27", $companyNameForUrl);
-        $companyNameForUrl = str_replace(" ", "+", $companyNameForUrl);
+        $companyNameForUrl = str_replace(' ', '+', $companyNameForUrl);
+        $companyNameForUrl = str_replace('&', '%26', $companyNameForUrl);
+        $companyNameForUrl = str_replace("'", '%27', $companyNameForUrl);
+        $companyNameForUrl = str_replace(' ', '+', $companyNameForUrl);
 
-        return "https://www.google.com/search?q=" . $companyNameForUrl . "+" . $company->getPostalCode();
+        return 'https://www.google.com/search?q='.$companyNameForUrl.'+'.$company->getPostalCode();
     }
 
     public function findCompanyFromRequest(string $content): string
@@ -74,7 +73,7 @@ final class GoogleService
         }, $links));
 
         if (!reset($companyFound)) {
-            return "Not found";
+            return 'Not found';
         }
 
         return reset($companyFound);

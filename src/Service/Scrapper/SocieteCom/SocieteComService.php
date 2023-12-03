@@ -10,8 +10,8 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-///////// THIS SERVICE IS OBSOLETE ///////////
-    ///////// SOCIETE COM BANNED THE IP SO WE ARE USING GOUV API WHICH IS FREE ///////////
+// /////// THIS SERVICE IS OBSOLETE ///////////
+// /////// SOCIETE COM BANNED THE IP SO WE ARE USING GOUV API WHICH IS FREE ///////////
 final class SocieteComService
 {
     private HttpClientInterface $client;
@@ -23,11 +23,11 @@ final class SocieteComService
 
     public function generateCompanySearchUrl(string $companyName): string
     {
-        $companyNameForUrl = str_replace(" ", "+", $companyName);
-        $companyNameForUrl = str_replace("&", "%26", $companyNameForUrl);
-        $companyNameForUrl = str_replace("'", "%27", $companyNameForUrl);
+        $companyNameForUrl = str_replace(' ', '+', $companyName);
+        $companyNameForUrl = str_replace('&', '%26', $companyNameForUrl);
+        $companyNameForUrl = str_replace("'", '%27', $companyNameForUrl);
 
-        return "https://www.societe.com/cgi-bin/search?champs=" . $companyNameForUrl;
+        return 'https://www.societe.com/cgi-bin/search?champs='.$companyNameForUrl;
     }
 
     /**
@@ -73,8 +73,8 @@ final class SocieteComService
         $links = array_merge($links, $linksDeno, $linksEtab);
 
         return [
-            "infos" => $infos,
-            "links" => $links
+            'infos' => $infos,
+            'links' => $links,
         ];
     }
 
@@ -94,7 +94,7 @@ final class SocieteComService
                     'cookie' => 'CONSENT=YES+cb.20210706-13-p0.fr+FX+241;',
                     'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
                     'Host: www.societe.com',
-                    'Accept: text/html'
+                    'Accept: text/html',
                 ],
             ]
         );
@@ -104,9 +104,8 @@ final class SocieteComService
 
     public function generatePersonalCompanyLink(string $link): string
     {
-        return "https://www.societe.com/" . $link;
+        return 'https://www.societe.com/'.$link;
     }
-
 
     /**
      * @throws TransportExceptionInterface
@@ -137,9 +136,10 @@ final class SocieteComService
         $crawlerPage = new Crawler($content);
 
         $leadersTab = $crawlerPage->filter('#tabledir > * span')->each(function (Crawler $node, $i) {
-            if ($node->text() == "En savoir add" || $node->text() == "Afficher tous les dirigeants") {
+            if ('En savoir add' == $node->text() || 'Afficher tous les dirigeants' == $node->text()) {
                 return;
             }
+
             return $node->text();
         });
 
@@ -150,7 +150,7 @@ final class SocieteComService
                 return $node->text();
             });
 
-            if (strtolower(strtok($societeName[0], " ")) == "monsieur" || strtolower(strtok($societeName[0], " ")) == "madame") {
+            if ('monsieur' == strtolower(strtok($societeName[0], ' ')) || 'madame' == strtolower(strtok($societeName[0], ' '))) {
                 return $societeName;
             }
         }
@@ -160,14 +160,14 @@ final class SocieteComService
 
     public function getLeaderListString(array $leaderList): string
     {
-        $stringLeader = "";
+        $stringLeader = '';
         if (count($leaderList) > 0) {
             foreach ($leaderList as $leader) {
-                $stringLeader .= $leader . " | ";
+                $stringLeader .= $leader.' | ';
             }
             $stringLeader = substr($stringLeader, 0, -3);
         } else {
-            $stringLeader = "Not found";
+            $stringLeader = 'Not found';
         }
 
         return $stringLeader;

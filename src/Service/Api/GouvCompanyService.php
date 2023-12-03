@@ -26,13 +26,12 @@ final class GouvCompanyService
     public function searchGouvCompanies(
         string $name,
         string $postalCode,
-    ) : string
-    {
+    ): string {
         $response = $this->client->request('GET', 'https://recherche-entreprises.api.gouv.fr/search', [
             'query' => [
                 'q' => $name,
                 'code_postal' => $postalCode,
-            ]
+            ],
         ]);
 
         $content = $response->getContent();
@@ -41,45 +40,44 @@ final class GouvCompanyService
         return $this->findCompanyLeaders($data, $name, $postalCode);
     }
 
-    public function findCompanyLeaders(mixed $data, string $name, string $postalCode): string {
-        $stringLeader = "";
+    public function findCompanyLeaders(mixed $data, string $name, string $postalCode): string
+    {
+        $stringLeader = '';
         $dirigeants = [];
 
-        if ($data["results"] !== [])
-        {
-            $company = $data["results"][0];
+        if ([] !== $data['results']) {
+            $company = $data['results'][0];
 
-            if ($company["siege"]["code_postal"] == $postalCode) {
-                if ($company['etat_administratif'] !== "A") {
-                    return "Inactive";
+            if ($company['siege']['code_postal'] == $postalCode) {
+                if ('A' !== $company['etat_administratif']) {
+                    return 'Inactive';
                 }
 
-                if ($company["dirigeants"] == []) {
-                    return "Pas de dirigeants";
+                if ([] == $company['dirigeants']) {
+                    return 'Pas de dirigeants';
                 }
 
                 foreach ($company['dirigeants'] as $dirigeant) {
-                    if (isset($dirigeant["nom"])) {
-                        if (str_contains($dirigeant["prenoms"], ' '))
-                        {
-                            $dirigeant["prenoms"] = strtok($dirigeant["prenoms"], ' ');
+                    if (isset($dirigeant['nom'])) {
+                        if (str_contains($dirigeant['prenoms'], ' ')) {
+                            $dirigeant['prenoms'] = strtok($dirigeant['prenoms'], ' ');
                         }
-                        if ($dirigeant["qualite"] == null) {
-                            $dirigeant["qualite"] = "Gérant";
+                        if (null == $dirigeant['qualite']) {
+                            $dirigeant['qualite'] = 'Gérant';
                         }
-                        $dirigeants[$dirigeant["qualite"]] = $dirigeant["nom"] . " " . $dirigeant["prenoms"];
+                        $dirigeants[$dirigeant['qualite']] = $dirigeant['nom'].' '.$dirigeant['prenoms'];
                     }
                 }
 
                 foreach ($dirigeants as $qualite => $name) {
-                        $stringLeader = $stringLeader . $qualite . " : " . $name . " | ";
+                    $stringLeader = $stringLeader.$qualite.' : '.$name.' | ';
                 }
                 $stringLeader = substr($stringLeader, 0, -2);
             } else {
-                $stringLeader = "Not found";
+                $stringLeader = 'Not found';
             }
         } else {
-            $stringLeader = "Not found";
+            $stringLeader = 'Not found';
         }
 
         return $stringLeader;

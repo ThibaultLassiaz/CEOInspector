@@ -8,17 +8,11 @@ class CompanyMessage
     {
     }
 
-    /**
-     * @return int
-     */
     public function getCompanyId(): int
     {
         return $this->companyId;
     }
 
-    /**
-     * @param int $companyId
-     */
     public function setCompanyId(int $companyId): void
     {
         $this->companyId = $companyId;

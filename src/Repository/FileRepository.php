@@ -8,7 +8,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<File>
- *
  */
 class FileRepository extends ServiceEntityRepository
 {

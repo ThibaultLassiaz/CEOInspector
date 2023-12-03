@@ -18,14 +18,12 @@ class FileMessageHandler
     private FileService $fileService;
     private MessageBusInterface $bus;
 
-
     public function __construct(
-        ApiService          $apiService,
-        EntityService       $entityService,
-        FileService         $fileService,
+        ApiService $apiService,
+        EntityService $entityService,
+        FileService $fileService,
         MessageBusInterface $bus
-    )
-    {
+    ) {
         $this->apiService = $apiService;
         $this->entityService = $entityService;
         $this->fileService = $fileService;

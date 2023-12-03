@@ -6,7 +6,6 @@ use App\Message\CompanyMessage;
 use App\Repository\CompanyRepository;
 use App\Service\Api\GouvCompanyService;
 use App\Service\Utils\EntityService;
-use Exception;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -22,8 +21,8 @@ class CompanyMessageHandler
 
     public function __construct(
         CompanyRepository $companyRepository,
-        EntityService     $entityService,
-        GouvCompanyService     $gouvCompanyService,
+        EntityService $entityService,
+        GouvCompanyService $gouvCompanyService,
     ) {
         $this->companyRepository = $companyRepository;
         $this->entityService = $entityService;
@@ -34,7 +33,7 @@ class CompanyMessageHandler
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws Exception
+     * @throws \Exception
      */
     public function __invoke(CompanyMessage $message): void
     {
@@ -44,7 +43,6 @@ class CompanyMessageHandler
         }
         $company->setTreated(true);
 
-
         try {
             $leaders = $this->gouvCompanyService->searchGouvCompanies(
                 $company->getName(),
@@ -52,7 +50,7 @@ class CompanyMessageHandler
             );
             $company->setLeader($leaders);
         } catch (ClientException) {
-            $company->setLeader("Failed to request");
+            $company->setLeader('Failed to request');
         }
 
         $this->entityService->flush();

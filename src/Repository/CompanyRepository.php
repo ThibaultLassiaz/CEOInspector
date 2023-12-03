@@ -52,6 +52,7 @@ class CompanyRepository extends ServiceEntityRepository
         $qb->select('count(c) as total, SUM(CASE WHEN c.treated = true THEN 1 ELSE 0 END) as treated, SUM(CASE WHEN c.treated = false THEN 1 ELSE 0 END) as non_treated')
             ->where('c.file = :file')
             ->setParameter('file', $file);
+
         return $qb->getQuery()->getSingleResult();
     }
 }

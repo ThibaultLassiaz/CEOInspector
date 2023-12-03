@@ -11,17 +11,15 @@ use Doctrine\ORM\NoResultException;
 
 final class ApiService
 {
-
     protected EntityManagerInterface $entityManager;
     protected CompanyRepository $companyRepository;
     protected FileRepository $fileRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        CompanyRepository      $companyRepository,
-        FileRepository         $fileRepository,
-    )
-    {
+        CompanyRepository $companyRepository,
+        FileRepository $fileRepository,
+    ) {
         $this->entityManager = $entityManager;
         $this->companyRepository = $companyRepository;
         $this->fileRepository = $fileRepository;
@@ -42,7 +40,7 @@ final class ApiService
         $files = $this->fileRepository->findAll();
         foreach ($files as $file) {
             $count = $this->countTreated($file);
-            $result[] = ["file" => $file, "count" => $count];
+            $result[] = ['file' => $file, 'count' => $count];
         }
 
         return $result;
@@ -67,13 +65,13 @@ final class ApiService
         $file = $this->findFileByPath($filePath);
 
         $companies = $this->companyRepository->findBy([
-            'file' => $file
+            'file' => $file,
         ]);
 
         return
             [
                 'companies' => $companies,
-                'file' => $file
+                'file' => $file,
             ];
     }
 

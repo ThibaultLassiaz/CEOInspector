@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class EntityService
 {
-
     protected EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -37,9 +36,9 @@ final class EntityService
 
         $file = new File();
         $file->setFileId($maxFileId + 1);
-        $file->setName($parts[0] . "_" . $file->getFileId());
+        $file->setName($parts[0].'_'.$file->getFileId());
         $file->setLineNumber($companyNumber);
-        $file->setPath("/files/output/" . $parts[0] . "_" . $file->getFileId());
+        $file->setPath('/files/output/'.$parts[0].'_'.$file->getFileId());
 
         $this->entityManager->persist($file);
         $this->entityManager->flush();
