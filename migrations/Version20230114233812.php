@@ -14,7 +14,7 @@ final class Version20230114233812 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Initial CEOInspector migration to create tables and indexes';
     }
 
     public function up(Schema $schema): void
