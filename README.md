@@ -9,6 +9,8 @@
 
 The main purpose of this application is to provide the first and last names of company owners by providing the company name and zip code.
 
+The application comes with a simple twig frontend that allows you to upload files on a dropzone. Check file completion, download and delete files.
+
 We're using this [French government open API](https://api.gouv.fr/les-api/api-recherche-entreprises) to do it
 
 ## How to use
