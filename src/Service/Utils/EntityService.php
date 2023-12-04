@@ -24,7 +24,7 @@ final class EntityService
     {
         $company = new Company();
         $company->setName($line[3]);
-        $company->setPostalCode($line[11]);
+        $company->setZipCode($line[11]);
         $company->setFile($file);
         $company->setTreated(false);
 

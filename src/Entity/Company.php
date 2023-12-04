@@ -17,7 +17,7 @@ class Company
     private string $name;
 
     #[ORM\Column]
-    private string $postalCode;
+    private string $zipCode;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $leader = null;
@@ -48,14 +48,14 @@ class Company
         $this->name = $name;
     }
 
-    public function getPostalCode(): string
+    public function getZipCode(): string
     {
-        return $this->postalCode;
+        return $this->zipCode;
     }
 
-    public function setPostalCode(string $postalCode): void
+    public function setZipCode(string $zipCode): void
     {
-        $this->postalCode = $postalCode;
+        $this->zipCode = $zipCode;
     }
 
     public function getLeader(): ?string

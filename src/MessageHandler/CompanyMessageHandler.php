@@ -48,7 +48,7 @@ class CompanyMessageHandler
         try {
             $leaders = $this->gouvCompanyService->searchGouvCompanies(
                 $company->getName(),
-                $company->getPostalCode()
+                $company->getZipCode()
             );
             $company->setLeader($leaders);
         } catch (ClientException) {
