@@ -24,20 +24,19 @@ symfony server:start
 ```
 or host it on you domain, it comes with an Apache dependency and preconfigured [.htaccess](https://github.com/ThibaultLassiaz/CEOInspector/blob/master/public/.htaccess)
 
-Once the server is started you can check on your [localhost](http://127.0.0.1:8000)
+Once the server is started you can check on your [localhost](http://127.0.0.1:8000) or on your web domain ex : https://my-domain.com
 
 ### Start the workers
 
 In order to start the workers you'll have to start both file and company queues using [Symfony Messenger Bundler](https://symfony.com/doc/current/messenger.html)
 
-To start workers you'll have to run 
 
-To consume file messages
+Start file worker to consume file messages
 ```Bash
 php bin/console messenger:consume --time-limit=55 file
 ```
 
-To compute api calls for every company leader you want to retrieve
+Start company worker to consume file messages
 
 ```Bash
 php bin/console messenger:consume --time-limit=55 company
